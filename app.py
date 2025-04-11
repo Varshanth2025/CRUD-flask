@@ -45,6 +45,38 @@ def index():
         data=drinks.query.order_by(drinks.added).all()    
     return render_template('index.html',data=data)
 
+@app.route('/delete/<int:id>')
+def delete(id):
+    del_drink=drinks.query.get(id)
+    try:
+        db.session.delete(del_drink)
+        db.session.commit()
+        return redirect('/')
+    except Exception as e:
+        return f"ERROR:{e}"    
+
+
+@app.route('/edit/<int:id>',methods=["GET","POST"])
+def edit(id):
+    drink=drinks.query.get(id)
+    if request.method=='POST':
+        drink.name = request.form.get('name', drink.name)
+        drink.size = request.form.get('size', drink.size)
+        drink.price = request.form.get('price', drink.price)
+        try:
+            db.session.commit()
+            return redirect('/')
+        except Exception as e:
+            return f'ERROR:{e}'    
+    else:
+        return render_template('edit.html',drink=drink)
+
+
+
+
+
+
+
 
 if __name__=="__main__":
     with app.app_context():

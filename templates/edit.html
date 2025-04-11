@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {%block head%} <title>DRINKS</title>{%endblock%}
+{%block body%}
+
+<div class="content"></div>
+<h1>EDIT drink</h1>
+<form action="/edit/{{drink.id}}" method="POST">
+  <input type="text" name="name" id="name" value="{{drink.name}}" />
+  <input type="text" name="size" id="size" value="{{drink.size}}" />
+  <input type="text" name="price" id="price" value="{{drink.price}}" />
+  <input type="submit" value="Edit" />
+</form>
+{%endblock%}
